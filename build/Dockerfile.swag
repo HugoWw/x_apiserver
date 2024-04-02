@@ -1,0 +1,3 @@
+FROM swaggerapi/swagger-ui
+
+COPY api-swagger.json /api-swagger.json

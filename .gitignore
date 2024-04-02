@@ -1,0 +1,8 @@
+# vi temporary files
+.*.swp
+.vscode
+*.code-workspace
+*.bak
+.idea
+*.DS_Store
+*.drawio
