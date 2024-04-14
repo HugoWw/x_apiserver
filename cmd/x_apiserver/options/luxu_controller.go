@@ -6,17 +6,17 @@ import (
 	"net/url"
 )
 
-type LuXuCtrlOptions struct {
+type CtrlOptions struct {
 	EndPoint string
 }
 
-func NewLuXuCtlOptions() *LuXuCtrlOptions {
-	return &LuXuCtrlOptions{
-		EndPoint: "http://lx-svc-ctrl.default:10433",
+func NewCtlOptions() *CtrlOptions {
+	return &CtrlOptions{
+		EndPoint: "http://auth-example-server.default:10433",
 	}
 }
 
-func (o *LuXuCtrlOptions) Valid() []error {
+func (o *CtrlOptions) Valid() []error {
 
 	errors := []error{}
 
@@ -24,7 +24,7 @@ func (o *LuXuCtrlOptions) Valid() []error {
 	if err != nil || hostURL.Scheme == "" || hostURL.Host == "" {
 		hostURL, err = url.Parse("http://" + o.EndPoint)
 		if err != nil {
-			errors = append(errors, fmt.Errorf("--lxctrl-endpoint %v The host endpoint url must be in normal format http://host", o.EndPoint))
+			errors = append(errors, fmt.Errorf("--ctrl-conf %v The host endpoint url must be in normal format http://host", o.EndPoint))
 		}
 	}
 
@@ -35,6 +35,6 @@ func (o *LuXuCtrlOptions) Valid() []error {
 	return errors
 }
 
-func (o *LuXuCtrlOptions) AddFlags(fs *pflag.FlagSet) {
-	fs.StringVar(&o.EndPoint, "lxctrl-endpoint", o.EndPoint, "The luxu controller endpoint address.")
+func (o *CtrlOptions) AddFlags(fs *pflag.FlagSet) {
+	fs.StringVar(&o.EndPoint, "ctrl-conf", o.EndPoint, "The controller endpoint address.")
 }

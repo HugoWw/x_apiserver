@@ -148,7 +148,7 @@ BuildAllImage(){
 main() {
   case ${MOUDLE} in
   --build-apiserver)
-   # BuildApiServer
+    BuildApiServer
     BuildSwagDoc
     ;;
   --build-apiserver-img)

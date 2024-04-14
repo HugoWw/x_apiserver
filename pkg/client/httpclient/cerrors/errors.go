@@ -43,7 +43,7 @@ func ResponseForErrorReason(err error) string {
 	return err.Error()
 }
 
-func responseForStatusCode(err error) int {
+func ErrorCodeForResponse(err error) int {
 	if status := APIInterfaceError(nil); errors.As(err, &status) {
 		return status.Status().HttpCode
 	}
@@ -52,53 +52,53 @@ func responseForStatusCode(err error) int {
 }
 
 func IsNotFound(err error) bool {
-	return responseForStatusCode(err) == http.StatusNotFound
+	return ErrorCodeForResponse(err) == http.StatusNotFound
 }
 
 func IsConflict(err error) bool {
-	return responseForStatusCode(err) == http.StatusConflict
+	return ErrorCodeForResponse(err) == http.StatusConflict
 }
 
 func IsBadRequest(err error) bool {
-	return responseForStatusCode(err) == http.StatusBadRequest
+	return ErrorCodeForResponse(err) == http.StatusBadRequest
 }
 
 func IsUnauthorized(err error) bool {
-	return responseForStatusCode(err) == http.StatusUnauthorized
+	return ErrorCodeForResponse(err) == http.StatusUnauthorized
 }
 
 func IsForbidden(err error) bool {
-	return responseForStatusCode(err) == http.StatusForbidden
+	return ErrorCodeForResponse(err) == http.StatusForbidden
 }
 
 func IsNotAcceptable(err error) bool {
-	return responseForStatusCode(err) == http.StatusNotAcceptable
+	return ErrorCodeForResponse(err) == http.StatusNotAcceptable
 }
 
 func IsUnsupportedMediaType(err error) bool {
-	return responseForStatusCode(err) == http.StatusUnsupportedMediaType
+	return ErrorCodeForResponse(err) == http.StatusUnsupportedMediaType
 }
 
 func IsMethodNotAllowed(err error) bool {
-	return responseForStatusCode(err) == http.StatusMethodNotAllowed
+	return ErrorCodeForResponse(err) == http.StatusMethodNotAllowed
 }
 
 func IsUnprocessableEntity(err error) bool {
-	return responseForStatusCode(err) == http.StatusUnprocessableEntity
+	return ErrorCodeForResponse(err) == http.StatusUnprocessableEntity
 }
 
 func IsServiceUnavailable(err error) bool {
-	return responseForStatusCode(err) == http.StatusServiceUnavailable
+	return ErrorCodeForResponse(err) == http.StatusServiceUnavailable
 }
 
 func IsGatewayTimeout(err error) bool {
-	return responseForStatusCode(err) == http.StatusGatewayTimeout
+	return ErrorCodeForResponse(err) == http.StatusGatewayTimeout
 }
 
 func IsTooManyRequests(err error) bool {
-	return responseForStatusCode(err) == http.StatusTooManyRequests
+	return ErrorCodeForResponse(err) == http.StatusTooManyRequests
 }
 
 func IsRequestTimeout(err error) bool {
-	return responseForStatusCode(err) == http.StatusRequestTimeout
+	return ErrorCodeForResponse(err) == http.StatusRequestTimeout
 }

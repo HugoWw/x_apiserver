@@ -27,12 +27,4 @@ func (a *Auth) Install() {
 		Metadata(restfulspec.KeyOpenAPITags, tags).
 		Returns(200, "ok", v1.APIResponse[string]{}),
 	)
-
-	a.Ws.Route(a.Ws.PATCH("/auth").To(auth.RefreshToken).
-		AllowedMethodsWithoutContentType([]string{"PATCH"}).
-		Doc("刷新token").
-		Param(a.Ws.HeaderParameter("token", "token info").DataType("string").Required(true)).
-		Metadata(restfulspec.KeyOpenAPITags, tags).
-		Returns(200, "ok", v1.APIResponse[string]{}),
-	)
 }

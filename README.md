@@ -1,7 +1,7 @@
 
 
 # 简介
-这是一个简化的Kube-APIServer项目，可以基于该简化的框架快速的搭建自己的web api服务.
+这是一个根据Kube-APIServer简化的项目，可以基于该简化的框架快速的搭建自己的web api服务.
 
 ----
 
@@ -10,6 +10,7 @@
 - 自定义不同模块日志分类输出和级别定义
 - 简化swag定义生成和对应接口的维护
 - apiserver服务自身健康检查
+- restful格式的http client请求
 
 # 整体目录结构
 该项目的大致目录结构如下：
@@ -40,9 +41,9 @@
 ```
 
 # 快速上手
-这里以平台登陆认证转发接口为例
+这里以平台登陆认证对接其它认证服务器转发接口为例
 1. 定义好api结构体
-x-apiserver/pkg/resource/v1
+x_apiserver/pkg/resource/v1
 ```go
 // 请求体内容
 type AuthUserLoginReq struct {
@@ -59,7 +60,7 @@ type AuthData struct {
 ```
 
 2. 实现对应的接口的handler
-x-apiserver/pkg/resource/impl/auth/auth.go
+x_apiserver/pkg/resource/impl/auth/auth.go
 ```go
 func Login(request *restful.Request, response *restful.Response) {
 	resp := app.NewResponse(response)
@@ -109,7 +110,7 @@ func Login(request *restful.Request, response *restful.Response) {
 ```
 
 3. 生成api swag文档和注册api
-x-apiserver/pkg/resource/route/auth.go
+x_apiserver/pkg/resource/route/auth.go
 生成api接口swag文档具体内容
 ```go
 type Auth struct {
@@ -136,7 +137,7 @@ x-apiserver/pkg/resource/register.go
 -----
 
 # 项目构建
-用户可以基于该脚本接入ci/cd完成自动的构建
+使用build.sh脚本来构建项目和swag文档。同时可以基于该脚本接入ci/cd完成自动的构建
 ```shell
 ./build.sh --help      
 Execute build.sh script build programs.

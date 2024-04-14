@@ -76,33 +76,7 @@ func LoginOut(request *restful.Request, response *restful.Response) {
 
 	if err != nil {
 		clog.Logger.Errorf("Delete(login out)  Controller /v1/auth failed %v", err)
-		resp.Response(app.ServerErrors.WithErrMsg(cerrors.ResponseForErrorReason(err)))
-		return
-	}
-
-	resp.Response(app.Success)
-}
-
-func RefreshToken(request *restful.Request, response *restful.Response) {
-	resp := app.NewResponse(response)
-	token := request.HeaderParameter("token")
-
-	if token == "" {
-		clog.Logger.Errorf("The token in the request header is empty in %s", request.Request.URL.Path)
-		resp.Response(app.LackParams.WithErrMsg("请求头中缺少token"))
-		return
-	}
-
-	err := impl.HttpC.Patch().
-		SetPath("/v1/auth").
-		SetHeader(constant.X_AUTH_TOKEN, token).
-		Body(nil).
-		Do(context.TODO()).
-		Error()
-
-	if err != nil {
-		clog.Logger.Errorf("Path(update session) Controller /v1/auth failed %v", err)
-		resp.Response(app.ServerErrors.WithErrMsg(cerrors.ResponseForErrorReason(err)))
+		resp.Response(app.UnKnowError.WithCodeAndMsg(cerrors.ErrorCodeForResponse(err), cerrors.ResponseForErrorReason(err)))
 		return
 	}
 

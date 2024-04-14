@@ -8,7 +8,7 @@ import (
 type ServerRunOptions struct {
 	Server         *ServerOptions
 	HttpClient     *HttpClientOption
-	LuXuCtrl       *LuXuCtrlOptions
+	CtrlConf       *CtrlOptions
 	LeaderElection *LeaderElectionOptions
 }
 
@@ -17,7 +17,7 @@ func NewServerRunOptions() *ServerRunOptions {
 	s := ServerRunOptions{
 		Server:         NewServerOptions(),
 		HttpClient:     NewHttpClientOptions(),
-		LuXuCtrl:       NewLuXuCtlOptions(),
+		CtrlConf:       NewCtlOptions(),
 		LeaderElection: NewLeaderElectionOptions(),
 	}
 
@@ -29,7 +29,7 @@ func (s *ServerRunOptions) Validate() []error {
 	errs := []error{}
 	errs = append(errs, s.Server.Valid()...)
 	errs = append(errs, s.HttpClient.Valid()...)
-	errs = append(errs, s.LuXuCtrl.Valid()...)
+	errs = append(errs, s.CtrlConf.Valid()...)
 	errs = append(errs, s.LeaderElection.Valid()...)
 
 	return errs
@@ -40,7 +40,7 @@ func (s *ServerRunOptions) Flags() (fss flag.NamedFlagSets) {
 
 	s.Server.AddFlags(fss.FlagSet("server"))
 	s.HttpClient.AddFlags(fss.FlagSet("http-client"))
-	s.LuXuCtrl.AddFlags(fss.FlagSet("luxu-controller"))
+	s.CtrlConf.AddFlags(fss.FlagSet("controller-endpoints"))
 	s.LeaderElection.AddFlags(fss.FlagSet("leader-election"))
 
 	return fss

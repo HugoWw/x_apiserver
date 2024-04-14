@@ -37,14 +37,19 @@ func (r *resultCode) GetMsg() string {
 	return r.Message
 }
 
+// WithErrMsg rewrite the response message
 func (r *resultCode) WithErrMsg(msg string) *resultCode {
 	newErrCode := *r
 	newErrCode.Message = msg
 	return &newErrCode
 }
 
-func (r *resultCode) Msgf(args []interface{}) string {
-	return fmt.Sprintf(r.Message, args...)
+// WithCodeAndMsg rewrite the status code and response message
+func (r *resultCode) WithCodeAndMsg(code int, msg string) *resultCode {
+	newErrResult := *r
+	newErrResult.Code = code
+	newErrResult.Message = msg
+	return &newErrResult
 }
 
 func (r *resultCode) StatusCode() int {

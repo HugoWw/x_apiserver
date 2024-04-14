@@ -10,7 +10,7 @@ func TestAPIServer(t *testing.T) {
 	cmd := app.NewAPIServerCommand()
 	args := []string{
 		"--bind-addr=0.0.0.0:8866",
-		"--lxctrl-endpoint=https://192.168.3.242:30843",
+		"--ctrl-conf=https://192.168.100.1:31803",
 	}
 
 	cmd.SetArgs(args)

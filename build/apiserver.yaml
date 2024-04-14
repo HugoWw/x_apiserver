@@ -30,7 +30,7 @@ spec:
           command:
             - /app/x_apiserver
             - --bind-addr=0.0.0.0:8866
-            - --lxctrl-endpoint=https://192.168.100.1:31803
+            - --ctrl-conf=https://192.168.100.1:31803
           ports:
             - containerPort: 8866
               protocol: TCP

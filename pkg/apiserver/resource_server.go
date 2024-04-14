@@ -16,7 +16,7 @@ func CreateBaseResourceServerConfig(c *restful.Container, option *options.Server
 	}
 
 	client := apiserverHttp.InitHttpClient(option.HttpClient)
-	resetClient, err := rst.NewHttpClient(client, option.HttpClient.TimeOut, option.LuXuCtrl.EndPoint, option.HttpClient.MaxRetries)
+	resetClient, err := rst.NewHttpClient(client, option.HttpClient.TimeOut, option.CtrlConf.EndPoint, option.HttpClient.MaxRetries)
 	if err != nil {
 		return nil, err
 	}
