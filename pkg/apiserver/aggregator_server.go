@@ -20,7 +20,10 @@ type AggregatorServer struct {
 func Create(opt *options.ServerRunOptions) (*AggregatorServer, error) {
 	c := servermux.NewAPIServerHandler("APIContainer")
 
-	baseResourceC, _ := CreateBaseResourceServerConfig(c.GoRestfulContainer, opt)
+	baseResourceC, err := CreateBaseResourceServerConfig(c.GoRestfulContainer, opt)
+	if err != nil {
+		return nil, err
+	}
 	baseResourceS := baseResourceC.New()
 
 	return &AggregatorServer{

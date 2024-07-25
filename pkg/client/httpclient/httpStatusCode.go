@@ -1,11 +1,11 @@
 package httpclient
 
 import (
-	"github.com/HugoWw/x_apiserver/pkg/client/httpclient/cerrors"
+	"github.com/HugoWw/x_apiserver/pkg/client/httpclient/wrap_error"
 	"net/http"
 )
 
-func httpStatusCode2String(code int, method string, host string, body *[]byte) *cerrors.ResultStatus {
+func httpStatusCode2String(code int, method string, host string, body *[]byte) *wrap_error.ResultStatus {
 
 	reason := ""
 
@@ -46,7 +46,7 @@ func httpStatusCode2String(code int, method string, host string, body *[]byte) *
 		}
 	}
 
-	return &cerrors.ResultStatus{ErrorStatus: cerrors.APIStatus{
+	return &wrap_error.ResultStatus{ErrorStatus: wrap_error.APIStatus{
 		HttpCode:   code,
 		HttpMethod: method,
 		Body:       body,

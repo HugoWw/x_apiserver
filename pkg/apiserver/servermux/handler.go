@@ -23,7 +23,7 @@ func NewAPIServerHandler(name string) *APIServerHandler {
 	// Add container filter to enable CORS
 	cors := restful.CrossOriginResourceSharing{
 		ExposeHeaders: []string{
-			"Content-Type", constant.X_AUTH_TOKEN, constant.X_LX_PROXY, constant.X_TRN_ID, constant.X_NM_PAGE,
+			"Content-Type", constant.X_AUTH_TOKEN,
 			"Access-Control-Allow-Origin", "Access-Control-Allow-Headers",
 		},
 		AllowedHeaders: []string{"Content-Type", "Accept", "Content-Length", "Accept-Encoding"},

@@ -10,6 +10,7 @@ type ServerRunOptions struct {
 	HttpClient     *HttpClientOption
 	CtrlConf       *CtrlOptions
 	LeaderElection *LeaderElectionOptions
+	MysqlClient    *MysqlClientOptions
 }
 
 // NewServerRunOptions creates a new ServerRunOptions object with default parameters
@@ -19,6 +20,7 @@ func NewServerRunOptions() *ServerRunOptions {
 		HttpClient:     NewHttpClientOptions(),
 		CtrlConf:       NewCtlOptions(),
 		LeaderElection: NewLeaderElectionOptions(),
+		MysqlClient:    NewMysqlClientOptions(),
 	}
 
 	return &s
@@ -31,6 +33,7 @@ func (s *ServerRunOptions) Validate() []error {
 	errs = append(errs, s.HttpClient.Valid()...)
 	errs = append(errs, s.CtrlConf.Valid()...)
 	errs = append(errs, s.LeaderElection.Valid()...)
+	errs = append(errs, s.MysqlClient.Valid()...)
 
 	return errs
 }
@@ -42,6 +45,7 @@ func (s *ServerRunOptions) Flags() (fss flag.NamedFlagSets) {
 	s.HttpClient.AddFlags(fss.FlagSet("http-client"))
 	s.CtrlConf.AddFlags(fss.FlagSet("controller-endpoints"))
 	s.LeaderElection.AddFlags(fss.FlagSet("leader-election"))
+	s.MysqlClient.AddFlags(fss.FlagSet("mysql-client"))
 
 	return fss
 }

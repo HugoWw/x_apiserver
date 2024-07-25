@@ -1,9 +1,11 @@
 package apiserver
 
 import (
+	"database/sql"
 	"github.com/HugoWw/x_apiserver/cmd/x_apiserver/options"
 	apiserverHttp "github.com/HugoWw/x_apiserver/pkg/apiserver/http"
 	"github.com/HugoWw/x_apiserver/pkg/apiserver/resources"
+	"github.com/HugoWw/x_apiserver/pkg/apiserver/storage"
 	rst "github.com/HugoWw/x_apiserver/pkg/client/httpclient"
 	"github.com/HugoWw/x_apiserver/pkg/constant"
 	restful "github.com/emicklei/go-restful/v3"
@@ -21,6 +23,11 @@ func CreateBaseResourceServerConfig(c *restful.Container, option *options.Server
 		return nil, err
 	}
 
+	sqlDb, err := storage.InitMysqlDBObj(option.MysqlClient)
+	if err != nil {
+		return nil, err
+	}
+
 	gws, err := resources.Default.GetAPIRegisterResource(constant.BaseResource)
 	if err != nil {
 		return nil, err
@@ -30,6 +37,7 @@ func CreateBaseResourceServerConfig(c *restful.Container, option *options.Server
 		GenericServerConfig: genericServerCfg,
 		webservice:          gws.GenericWebService(),
 		httpC:               resetClient,
+		Db:                  sqlDb,
 	}, nil
 
 }
@@ -38,6 +46,7 @@ type BaseResourceServerConfig struct {
 	*GenericServerConfig
 	webservice *restful.WebService
 	httpC      *rst.RTClient
+	Db         *sql.DB
 	//todo other obj config init
 }
 
@@ -51,6 +60,7 @@ func (c *BaseResourceServerConfig) New() *BaseResourceServer {
 		GenericServer: genericServer,
 		RestOption: &resources.RestOption{
 			HttpClient: c.httpC,
+			Db:         c.Db,
 		},
 	}
 

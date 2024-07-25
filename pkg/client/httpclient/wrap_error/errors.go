@@ -1,4 +1,4 @@
-package cerrors
+package wrap_error
 
 import (
 	"errors"

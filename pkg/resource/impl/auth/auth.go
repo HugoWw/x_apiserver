@@ -4,7 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"github.com/HugoWw/x_apiserver/pkg/app"
-	"github.com/HugoWw/x_apiserver/pkg/client/httpclient/cerrors"
+	"github.com/HugoWw/x_apiserver/pkg/client/httpclient/wrap_error"
 	"github.com/HugoWw/x_apiserver/pkg/clog"
 	"github.com/HugoWw/x_apiserver/pkg/constant"
 	"github.com/HugoWw/x_apiserver/pkg/resource/impl"
@@ -50,7 +50,7 @@ func Login(request *restful.Request, response *restful.Response) {
 
 	if err != nil {
 		clog.Logger.Errorf("Post Controller /v1/auth failed %v", err)
-		resp.Response(app.AuthenticationFailed.WithErrMsg(cerrors.ResponseForErrorReason(err)))
+		resp.Response(app.AuthenticationFailed.WithErrMsg(wrap_error.ResponseForErrorReason(err)))
 		return
 	}
 
@@ -76,7 +76,7 @@ func LoginOut(request *restful.Request, response *restful.Response) {
 
 	if err != nil {
 		clog.Logger.Errorf("Delete(login out)  Controller /v1/auth failed %v", err)
-		resp.Response(app.UnKnowError.WithCodeAndMsg(cerrors.ErrorCodeForResponse(err), cerrors.ResponseForErrorReason(err)))
+		resp.Response(app.UnKnowError.WithCodeAndMsg(wrap_error.ErrorCodeForResponse(err), wrap_error.ResponseForErrorReason(err)))
 		return
 	}
 
