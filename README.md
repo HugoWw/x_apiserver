@@ -12,6 +12,7 @@
 - 简化swag定义生成和对应接口的维护
 - apiserver服务自身健康检查
 - restful格式的http client请求
+- 使用ent对数据库以图的方式进行CURD
 
 # 整体目录结构
 该项目的大致目录结构如下：
@@ -34,6 +35,7 @@
     ├── client #--各种客户端(http、kube client等等)
     ├── clog #---zap日志的封装
     ├── constant #--常量
+    ├── dao #--数据库访问   
     ├── middleware
     ├── permissions #--权限相关
     ├── resource  #--所有的路由、实现、结构体定义
@@ -134,6 +136,41 @@ x-apiserver/pkg/resource/register.go
 ```go
 (&router.Auth{ws}).Install()
 ```
+
+-----
+
+# 数据库操作
+
+本项目使用的ent版本较新需要go版本>=1.21，这里简单简述ent使用方式，具体见官方[ent](https://entgo.io/docs/getting-started)文档.
+
+先前条件下载ent二进制工具：
+```shell
+go get -d entgo.io/ent/cmd/ent
+```
+
+1. 创建表
+```shell
+$cd dao
+$ent new User
+```
+
+2. 添加字段
+```go
+// Fields of the User.
+func (User) Fields() []ent.Field {
+	return []ent.Field{
+		field.String("name"), //添加表字段
+	}
+}
+```
+
+3. 生成数据库实体操作代码
+```shell
+$cd dao
+$go generate ./ent
+```
+
+
 
 -----
 

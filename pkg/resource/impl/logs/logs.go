@@ -1,6 +1,7 @@
 package logs
 
 import (
+	"fmt"
 	"github.com/HugoWw/x_apiserver/pkg/app"
 	"github.com/HugoWw/x_apiserver/pkg/clog"
 	v1 "github.com/HugoWw/x_apiserver/pkg/resource/v1"
@@ -21,7 +22,10 @@ func SetDebugLog(request *restful.Request, response *restful.Response) {
 	}
 
 	if debugLog.DebugModule == "" {
-		clog.GlobalClogSets.SetLogAtomicLevel(zap.InfoLevel)
+		if err := clog.GlobalClogSets.SetLogAtomicLevel(zap.InfoLevel); err != nil {
+			resp.Response(app.ServerErrors.WithErrMsg(fmt.Sprintf("change log level error:%v", err)))
+			return
+		}
 		resp.Response(app.Success)
 		return
 	}
@@ -39,9 +43,15 @@ func SetDebugLog(request *restful.Request, response *restful.Response) {
 	}
 
 	if isALl {
-		clog.GlobalClogSets.SetLogAtomicLevel(zap.DebugLevel)
+		if err := clog.GlobalClogSets.SetLogAtomicLevel(zap.DebugLevel); err != nil {
+			resp.Response(app.ServerErrors.WithErrMsg(fmt.Sprintf("change log level error:%v", err)))
+			return
+		}
 	} else {
-		clog.GlobalClogSets.SetLogAtomicLevel(zap.DebugLevel, needModuleList...)
+		if err := clog.GlobalClogSets.SetLogAtomicLevel(zap.DebugLevel, needModuleList...); err != nil {
+			resp.Response(app.ServerErrors.WithErrMsg(fmt.Sprintf("change log level error:%v", err)))
+			return
+		}
 	}
 
 	resp.Response(app.Success)
